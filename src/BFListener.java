@@ -1,3 +1,4 @@
+
 import org.objectweb.asm.Opcodes;
 
 public class BFListener extends BrainfuckBaseListener implements Opcodes {

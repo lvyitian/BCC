@@ -1,12 +1,12 @@
 # BCC (Brainfuck to JVM bytecode compiler)
 
-This is a compiler from Brainfuck to JVM bytecode. Pull BFCompiler.jar and use the following syntax
+This is a compiler from Brainfuck to JVM bytecode. Pull BFCompiler.jar and use the following command:
 
 ```
 java -jar BFCompiler.jar [target source file] [name of class]
 ```
 
-This command will generate a class file with the name that you indicated in the above command. To run that file, use this:
+This command will generate a .class file with the name that you indicated in the above command. To run that file, use this:
 
 ```
 java -noverify [name of class]
