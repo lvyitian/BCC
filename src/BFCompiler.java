@@ -83,12 +83,10 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitMaxs(2, 3);
 		mv.visitEnd();
 	}
-	
-	private void emitincrMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "incr", "(ILjava/util/ArrayList;)V", "(ILjava/util/ArrayList<Ljava/lang/Byte;>;)V", null);
+	private void emitgetMethod() {
+		mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "get", "(ILjava/util/ArrayList;)B", "(ILjava/util/ArrayList<Ljava/lang/Byte;>;)B", null);
 		mv.visitCode();
 		Label start = new Label();
-		mv.visitLabel(start);
 		mv.visitVarInsn(ILOAD, 0);
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitMethodInsn(INVOKESTATIC, name, "ensureCapacity", "(ILjava/util/ArrayList;)V", false);
@@ -97,6 +95,22 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get", "(I)Ljava/lang/Object;", false);
 		mv.visitTypeInsn(CHECKCAST, "java/lang/Byte");
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B", false);
+		mv.visitInsn(IRETURN);
+		Label end = new Label();
+		mv.visitLabel(end);
+		mv.visitLocalVariable("index", "I", null, start, end, 0);
+		mv.visitLocalVariable("arr", "Ljava/util/ArrayList;", "Ljava/util/ArrayList<Ljava/lang/Byte;>;", start, end, 1);
+		mv.visitMaxs(2, 2);
+		mv.visitEnd();
+	}
+	private void emitincrMethod() {
+		mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "incr", "(ILjava/util/ArrayList;)V", "(ILjava/util/ArrayList<Ljava/lang/Byte;>;)V", null);
+		mv.visitCode();
+		Label start = new Label();
+		mv.visitLabel(start);
+		mv.visitVarInsn(ILOAD, 0);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKESTATIC, name, "get", "(ILjava/util/ArrayList;)B", false);
 		mv.visitVarInsn(ISTORE, 2);
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitVarInsn(ILOAD, 0);
@@ -126,12 +140,7 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitLabel(start);
 		mv.visitVarInsn(ILOAD, 0);
 		mv.visitVarInsn(ALOAD, 1);
-		mv.visitMethodInsn(INVOKESTATIC, name, "ensureCapacity", "(ILjava/util/ArrayList;)V", false);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitVarInsn(ILOAD, 0);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get", "(I)Ljava/lang/Object;", false);
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Byte");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B", false);
+		mv.visitMethodInsn(INVOKESTATIC, name, "get", "(ILjava/util/ArrayList;)B", false);
 		mv.visitVarInsn(ISTORE, 2);
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitVarInsn(ILOAD, 0);
@@ -161,25 +170,18 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitLabel(start);
 		mv.visitVarInsn(ILOAD, 0);
 		mv.visitVarInsn(ALOAD, 1);
-		mv.visitMethodInsn(INVOKESTATIC, name, "ensureCapacity", "(ILjava/util/ArrayList;)V", false);
-		mv.visitVarInsn(ALOAD, 1);
-		mv.visitVarInsn(ILOAD, 0);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get", "(I)Ljava/lang/Object;", false);
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Byte");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B", false);
+		mv.visitMethodInsn(INVOKESTATIC, name, "get", "(ILjava/util/ArrayList;)B", false);
 		mv.visitVarInsn(ISTORE, 2);
+		Label l1 = new Label();
+		mv.visitLabel(l1);
+		mv.visitLineNumber(28, l1);
 		mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-		mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
-		mv.visitInsn(DUP);
 		mv.visitVarInsn(ILOAD, 2);
-		mv.visitIntInsn(SIPUSH, 255);
-		mv.visitInsn(IAND);
-		mv.visitMethodInsn(INVOKESTATIC, "java/lang/String", "valueOf", "(I)Ljava/lang/String;", false);
-		mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "(Ljava/lang/String;)V", false);
-		mv.visitLdcInsn(" ");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+		mv.visitInsn(I2C);
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(C)V", false);
+		Label l2 = new Label();
+		mv.visitLabel(l2);
+		mv.visitLineNumber(29, l2);
 		mv.visitInsn(RETURN);
 		Label end = new Label();
 		mv.visitLabel(end);
@@ -190,7 +192,7 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitEnd();
 	}
 	private void emitsetMethod() {
-		mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "set", "(ILjava/util/ArrayList;I)V", "(ILjava/util/ArrayList<Ljava/lang/Byte;>;I)V", null);
+		mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "set", "(ILjava/util/ArrayList;B)V", "(ILjava/util/ArrayList<Ljava/lang/Byte;>;B)V", null);
 		mv.visitCode();
 		Label start = new Label();
 		mv.visitLabel(start);
@@ -200,7 +202,6 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitVarInsn(ALOAD, 1);
 		mv.visitVarInsn(ILOAD, 0);
 		mv.visitVarInsn(ILOAD, 2);
-		mv.visitInsn(I2B);
 		mv.visitMethodInsn(INVOKESTATIC, "java/lang/Byte", "valueOf", "(B)Ljava/lang/Byte;", false);
 		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "set", "(ILjava/lang/Object;)Ljava/lang/Object;", false);
 		mv.visitInsn(POP);
@@ -209,7 +210,7 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		mv.visitLabel(end);
 		mv.visitLocalVariable("index", "I", null, start, end, 0);
 		mv.visitLocalVariable("arr", "Ljava/util/ArrayList;", "Ljava/util/ArrayList<Ljava/lang/Byte;>;", start, end, 1);
-		mv.visitLocalVariable("item", "I", null, start, end, 2);
+		mv.visitLocalVariable("item", "B", null, start, end, 2);
 		mv.visitMaxs(3, 3);
 		mv.visitEnd();
 	}
@@ -231,10 +232,11 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 			mv.visitEnd();
 		}
 		emitcapaMethod();
+		emitgetMethod();
+		emitsetMethod();
 		emitincrMethod();
 		emitdecrMethod();
 		emitprintMethod();
-		emitsetMethod();
 		// emit main method and initializations
 		{
 			mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
@@ -288,11 +290,9 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 		Label lbody = scopeEnd();
 		Label lcon = scopeEnd();
 		mv.visitLabel(lcon);
-		mv.visitVarInsn(ALOAD, 1);
 		mv.visitVarInsn(ILOAD, 2);
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "get", "(I)Ljava/lang/Object;", false);
-		mv.visitTypeInsn(CHECKCAST, "java/lang/Byte");
-		mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B", false);
+		mv.visitVarInsn(ALOAD, 1);
+		mv.visitMethodInsn(INVOKESTATIC, name, "get", "(ILjava/util/ArrayList;)B", false);
 		mv.visitJumpInsn(IFNE, lbody);
 	}
 	
@@ -326,8 +326,11 @@ public class BFCompiler extends BrainfuckBaseListener implements Opcodes {
 				mv.visitVarInsn(ILOAD, 2);
 				mv.visitVarInsn(ALOAD, 1);
 				mv.visitVarInsn(ALOAD, 3);
-				mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "nextInt", "()I", false);
-				mv.visitMethodInsn(INVOKESTATIC, name, "set", "(ILjava/util/ArrayList;I)V", false);
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "next", "()Ljava/lang/String;", false);
+				mv.visitInsn(ICONST_0);
+				mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "charAt", "(I)C", false);
+				mv.visitInsn(I2B);
+				mv.visitMethodInsn(INVOKESTATIC, name, "set", "(ILjava/util/ArrayList;B)V", false);
 				break;
 		}
 	}

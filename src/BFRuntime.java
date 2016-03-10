@@ -7,24 +7,25 @@ public class BFRuntime {
 			arr.add((byte)0);
 		}
 	}
-	public static void incr(int index, ArrayList<Byte> arr) {
+	public static byte get(int index, ArrayList<Byte> arr) {
 		ensureCapacity(index, arr);
-		byte current = arr.get(index);
+		return arr.get(index);
+	}
+	public static void set(int index, ArrayList<Byte> arr, byte item) {
+		ensureCapacity(index, arr);
+		arr.set(index, item);
+	}
+	public static void incr(int index, ArrayList<Byte> arr) {
+		byte current = get(index, arr);
 		arr.set(index, (++current));
 	}
 	public static void decr(int index, ArrayList<Byte> arr) {
-		ensureCapacity(index, arr);
-		byte current = arr.get(index);
+		byte current = get(index, arr);
 		arr.set(index, (--current));
 	}
 	public static void print(int index, ArrayList<Byte> arr) {
-		ensureCapacity(index, arr);
-		byte current = arr.get(index);
-		System.out.print((int)(current & 0xff) + " ");
-	}
-	public static void set(int index, ArrayList<Byte> arr, int item) {
-		ensureCapacity(index, arr);
-		arr.set(index, (byte)item);
+		byte current = get(index, arr);
+		System.out.print((char)current);
 	}
 	
 	public static void main(String[] args) {
@@ -35,11 +36,12 @@ public class BFRuntime {
 		++ptr;
 		--ptr;
 		incr(ptr, tape);
-		decr(ptr, tape);
-		set(ptr, tape, in.nextInt());
+		incr(ptr, tape);
+		set(ptr, tape, (byte)in.next().charAt(0));
+		incr(ptr, tape);
 		print(ptr, tape);
 		
-		while (tape.get(ptr) != 0) {
+		while (get(ptr, tape) != 0) {
 			++ptr;
 		}
 		
