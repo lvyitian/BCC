@@ -31,11 +31,14 @@ BFRuntime.java was written as a reference for the bytecode generation for the bf
 This is just an Eclipse project, so just use your favourite blend and go.
 To use my exact build configuration, you will need:
 
-Bytecode Outline 2.4.3 (Eclipse Marketplace)
-ANTLR 4 IDE 0.3.5 (Eclipse Marketplace)
-XText 2.7.3 (download "All-In-One Update Site" [here](http://www.eclipse.org/modeling/tmf/downloads/index.php?project=xtext&showAll=1&showMax=5&sortBy=))
 
-[Manually installing the .zip](http://stackoverflow.com/questions/23199245/eclipse-manually-install-plugin)
+Plugin | Version | Where?
+-------|---------|--------
+Bytecode Outline | 2.4.3 | (Eclipse Marketplace)
+ANTLR 4 IDE | 0.3.5 | (Eclipse Marketplace)
+XText | 2.7.3 | download "All-In-One Update Site" [here](http://www.eclipse.org/modeling/tmf/downloads/index.php?project=xtext&showAll=1&showMax=5&sortBy=)
+
+[Manually installing the .zip](http://stackoverflow.com/questions/23199245/eclipse-manually-install-plugin)  
 [Using the Eclipse Marketplace](https://wiki.eclipse.org/EPP/MPC/User_Guide)
 
 You can use the ASMifier provided by Bytecode Outline directly from Eclipse, and saving the grammar.g4 file in /grammar will automatically build the parser/lexer.
