@@ -2,8 +2,7 @@ import java.util.Scanner;
 
 public class BFRuntime {
 	public static int wrap(int i) {
-		if (i < 0) return 255-i;
-		else return 255 % i;
+		return (i + 256) % 256;
 	}
 	
 	public static void main(String[] args) {
@@ -19,7 +18,6 @@ public class BFRuntime {
 		
 		while(tape[ptr] != 0) {
 			ptr = wrap(--ptr);
-			System.out.println(tape[ptr]);
 		}
 		
 		in.close();

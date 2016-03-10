@@ -1,4 +1,4 @@
-grammar brainfuck;
+grammar Brainfuck;
 
 WS : [ \t\f\r\n] -> skip;
 
@@ -11,7 +11,7 @@ READ : ',';
 LSTART : '[';
 LEND : ']';
 
-program : expr+;
+program : expr+ EOF;
 
 expr : loop | operation;
 
