@@ -1,23 +1,23 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class BFRuntime {
-	public static int wrap(int i) {
-		return (i + 256) % 256;
-	}
 	
 	public static void main(String[] args) {
-		int tape[] = new int[256];
+		byte tape[] = new byte[40000];
+		Arrays.fill(tape, (byte)-128);
 		int ptr = 0;
 		Scanner in = new Scanner(System.in);
 
-		ptr = wrap(++ptr);
-		ptr = wrap(++ptr);
-		ptr = wrap(++ptr);
-		System.out.println(tape[ptr]);
-		tape[ptr] = in.nextInt();
+		++ptr;
+		--ptr;
+		++tape[ptr];
+		--tape[ptr];
+		System.out.println(tape[ptr] + 128);
+		tape[ptr] = (byte)(in.nextInt() - 127);
 		
-		while(tape[ptr] != 0) {
-			ptr = wrap(--ptr);
+		while (tape[ptr] + 128 != 0) {
+			++ptr;
 		}
 		
 		in.close();
