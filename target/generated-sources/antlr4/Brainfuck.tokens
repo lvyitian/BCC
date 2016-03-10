@@ -1,0 +1,17 @@
+RSHIFT=3
+READ=7
+LSHIFT=2
+INCR=4
+WS=1
+LEND=9
+PRNT=6
+DECR=5
+LSTART=8
+'>'=3
+'.'=6
+'-'=5
+']'=9
+'<'=2
+','=7
+'+'=4
+'['=8
